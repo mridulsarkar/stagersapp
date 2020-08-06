@@ -43,17 +43,14 @@ pom.xml.bak
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/MavenWrapperDownloader.java
-.mvn/maven-wrapper.properties
 .mvn/timing.properties
+.mvn/wrapper/MavenWrapperDownloader.java
+.mvn/wrapper/maven-wrapper.properties
 .mvn/wrapper/maven-wrapper.jar
 
 ### VisualStudioCode ###
+**/.vscode/
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 *.code-workspace
 .factorypath
 .classpath

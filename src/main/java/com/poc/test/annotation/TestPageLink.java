@@ -11,12 +11,24 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD })
 @Inherited
 public @interface TestPageLink {
+    /**
+     * This annotation should be used to specify name of the Test Page Link
+     */
     String name() default "";
     
+    /**
+     * This annotation should be used to specify Super Type of the Test Page Link
+     */
     String superType() default "";
     
+    /**
+     * This annotation should be used to specify Category of the Test Page Link
+     */
     String typeList() default "";
     
+    /**
+     * This annotation should be used to provide Description of the Test Page Link
+     */
     String description() default "";
     
 }

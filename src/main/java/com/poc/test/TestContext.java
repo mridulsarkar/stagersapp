@@ -9,10 +9,8 @@ import java.util.Map;
 
 public class TestContext
 {
-    public static final String Name = "uiTestContext";
+    public static final String Name = TestContext.class.getName();
     public static final String ID = "testContextId";
-    public static final String TestAutomationMode = "testAutomationMode";
-    public static final String ReturnUrlParam = "returnUrl";
 
     private Map<String, Object> internalContext = CollectionsUtil.map();
     private Map<Object, Object> context = CollectionsUtil.map();
@@ -153,20 +151,6 @@ public class TestContext
     
     public String getReturnUrl() {
         return (returnUrl != null) ? returnUrl[1] : null;
-    }
-    
-    @Override
-    public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(super.toString()).append(": ");
-        buffer.append("Username: ").append(username).append(";");
-        buffer.append("Context: ");
-        buffer.append((context != null) ? CollectionsUtil.serializeMap(context) : "null");
-        buffer.append(";");
-        buffer.append("InternalContext: ");
-        buffer.append((internalContext != null) ? CollectionsUtil.serializeMap(internalContext) : "null");
-        buffer.append(";");
-        return buffer.toString();
     }
     
 }

@@ -12,8 +12,23 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface TestStager
 {
+    /**
+     * This annotation should be used to provide Name of the Test Stager
+     */
     public String name() default "";
+
+    /**
+     * This annotation should be used to provide Super Type of the Test Stager
+     */
     public String superType() default "";
+
+    /**
+     * This annotation should be used to provide Category of the Test Stager
+     */
     public String typeList () default "";
+
+    /**
+     * This annotation should be used to provide Description of the Test Stager
+     */
     public String description () default "";
 }

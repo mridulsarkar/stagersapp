@@ -11,8 +11,6 @@ import java.io.FilterWriter;
 public class Serializer extends FilterWriter
 {
     private static boolean[] unsafeChars;
-    private static final int SMALL_STRING_LIMIT = 40;
-    private static final int BUF_LEN = 128;
     private final char[] buf;
     private int bufIndex;
     

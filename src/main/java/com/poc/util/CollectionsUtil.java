@@ -36,16 +36,14 @@ public final class CollectionsUtil
             serializer.writeObject((Object)map);
             serializer.flush();
             serializer.close();
-        }
-        catch (IOException exp) {
+        } catch (IOException exp) {
             return null;
         }
         final String result = writer.toString();
         try {
             serializer.close();
             writer.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             return null;
         }
         return result;

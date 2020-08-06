@@ -8,28 +8,26 @@ public class StringsUtil
         EmptyString = new String("");
     }
     
-    public static String decamelize(final String string) {
-        final StringBuffer buf = new StringBuffer();
+    public static String deCamelize(final String value) {
+        final StringBuffer decamelized = new StringBuffer();
         int lastUCIndex = -1;
-        for (int i = 0, len = string.length(); i < len; ++i) {
-            char c = string.charAt(i);
+        for (int i = 0, len = value.length(); i < len; ++i) {
+            char c = value.charAt(i);
             if (Character.isUpperCase(c)) {
                 if (i - 1 != lastUCIndex) {
-                    buf.append(" ");
+                    decamelized.append(" ");
                 }
                 lastUCIndex = i;
-            }
-            else if (Character.isLowerCase(c)) {
+            } else if (Character.isLowerCase(c)) {
                 if (i == 0) {
                     c = Character.toUpperCase(c);
                 }
-            }
-            else if (c == '_') {
+            } else if (c == '_') {
                 c = ' ';
             }
-            buf.append(c);
+            decamelized.append(c);
         }
-        return buf.toString();
+        return decamelized.toString();
     }
     
     public static boolean nullOrEmptyOrBlankString(final String str) {

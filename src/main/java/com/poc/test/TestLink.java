@@ -33,7 +33,6 @@ public class TestLink
 
     static {
         badCategoryNames.put("dummy","dummy");
-        badCategoryNames.put("htmlui","htmlui");
         badCategoryNames.put("test","test");
     }
     
@@ -55,7 +54,7 @@ public class TestLink
         this.type = type;
         
         displayName = computeDisplayName();
-        linkText = StringsUtil.decamelize(displayName);
+        linkText = StringsUtil.deCamelize(displayName);
         secondaryName = computeSecondaryName();
 
         if (!StringsUtil.nullOrEmptyOrBlankString(type)) {

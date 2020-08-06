@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.scannotation.archiveiterator.Filter;
+
 public final class ClassUtil
 {
     public static String NativeInteger = "int";
@@ -210,12 +212,13 @@ public final class ClassUtil
         
         try {
             JarScanner.scanClasses(
-                            new JarScanner.Filter() {
+                            new Filter() {
                                 public boolean accepts(String filename) {
                                     return true;
                                 }
-                            }, 
-                            new JarScanner.Filter() {
+                            },
+                            // Filter to accept only Stager PoC Classes 
+                            new Filter() {
                                 public boolean accepts(String filename) {
                                     return filename.contains("com/poc");
                                  }

@@ -20,11 +20,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @SpringBootApplication
 public class StagersApplication
 {
    @Autowired
    private SequenceGeneratorService sequenceGeneratorService;
+
+   private static final Logger logger = LogManager.getLogger(StagersApplication.class);
    
    public static void main(final String[] args) {
 	   final Locale en_US = new Locale("en", "US");
@@ -34,6 +39,7 @@ public class StagersApplication
 	   SpringApplication.run(StagersApplication.class, args);
 	   
 	   if (StringsUtil.isTestAutomationMode()) {
+         logger.info("Test Automation mode ON...Scanning Classess...");
 		   TestLinkManager.getInstance();
 		   registerAnnotationListener();
 		   ClassUtil.scanClasses();
