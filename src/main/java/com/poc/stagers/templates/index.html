@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+    <head>
+        <title>Stagers Demo - Home Page</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="hero-unit">
+                <div layout:fragment="content">
+                    <h1 th:text="#{title}"></h1>
+                    <p th:text="#{message}"></p>
+                    <p>
+                    <a href="/signup" th:href="@{/signup}" class="btn btn-large btn-success">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

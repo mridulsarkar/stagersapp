@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+    <head>
+        <title>SignUp</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <form class="form-signin" action="#" th:action="@{/signup}" method="post" th:object="${user}">
+                <img class="mb-4" src="https://xmlgraphics.apache.org/images/asf_logo_url.png" alt="" width="52" height="52" />
+                <h1 class="h3 mb-3 font-weight-normal" th:text="#{userregistration}"></h1>
+                
+                <div style="color:#b81624" th:text="${errorMsg}"></div>
+                <div th:if="${param.logout}" th:text="#{loggedout}"></div>
+                
+                <div>
+                    <label for="inputUsername" class="sr-only">Username</label>
+                    <!--<input type="username" th:field="*{Username}" class="form-control" placeholder="Username" required="" />-->
+                    <input type="email" name="username" id="inputUsername" class="form-control" placeholder="Username" required="" />
+                </div>
+                <div>
+                    <label for="inputEmail" class="sr-only">Email</label>
+                    <input type="email" th:field="*{Email}" class="form-control" placeholder="Email" required="" />
+                </div>
+                <div>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" th:field="*{Password}" class="form-control" placeholder="Password" required="" />
+                </div>
+                <div>
+                    <label for="inputFirstname" class="sr-only">First Name</label>
+                    <input type="text" th:field="*{FirstName}" class="form-control" placeholder="Firstname" required="" />
+                </div>
+                <div>
+                    <label for="inputSecondname" class="sr-only">Second Name</label>
+                    <input type="text" th:field="*{LastName}" class="form-control" placeholder="Secondname" required="" />
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" th:text="#{register}"></button>
+            </form>
+            <form class="form-signin" th:action="@{/login}" method="get">
+                <button class="btn btn-md btn-success btn-block" type="Submit" th:text="#{login}"></button>
+            </form>
+        </div>
+    </body>
+</html>

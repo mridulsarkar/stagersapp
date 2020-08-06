@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml" 
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+        layout:decorate="~{dashboarddefault}"
+        lang="en">
+    <head>
+        <title>Create Event Stager Page</title>
+    </head>
+    <body class="sb-nav-fixed">
+        <div id="layoutSidenav">
+            <div layout:fragment="content" id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h2 class="mt-4" th:text="#{createEvent}"></h2>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="f as fa-table mr-1 font-weight-bold" th:text="#{filleventdetails}"></h5>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-signin" th:action="@{/createevent}" method="post">
+                                    <div style="color:#b81624" th:text="${errorMsg}"></div>
+                                    <div th:if="${param.logout}" th:text="#{loggedout}"></div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6"> 
+                                            <label for="eventId" lass="sr-only">Event Id: </label>
+                                            <input type="text" name="eventId" id="eventId"  class="form-control" placeholder="Event Id" required="" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="eventStatus">Event Status: </label>
+                                            <select class="form-control" name="status" id="status">
+                                                <option th:each="evtstatus : ${T(com.poc.stagers.models.EventStatus.EventStatusEnum).values()}"
+                                                        th:value="${evtstatus}" th:text="${evtstatus}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="opportunityAmount">Opportunity Amount ($): </label>
+                                            <input type="number" name="amount" id="amount"  min="10000" step="any" class="form-control" placeholder="10000" required="" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="responseDeadline">Response Deadline: </label>
+                                            <input type="date" name="deadline" id="deadline" class="form-control" placeholder="Response Deadline" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="postingTitle">Posting Title: </label>
+                                        <input type="text" name="title" id="title" class="form-control" placeholder="Posting Title" required="" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description: </label>
+                                        <textarea rows=5 column=25 name="description" id="description" class="form-control" placeholder="Description" required=""></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{publish}"></button>
+                                    </div>
+                                    </form>
+                                <form class="form-signin" th:action="@{/dashboard}" method="get">
+                                    <button class="btn btn-md btn-success btn-block" type="Submit" th:text="#{cancel}"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+    <head>
+        <title>Stagers Page</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <form class="form-signin" th:action="@{/stagers}" method="post">
+                <img class="mb-4" src="https://xmlgraphics.apache.org/images/asf_logo_url.png" alt="" width="52" height="52" />
+                <h1 class="h3 mb-3 font-weight-normal" th:text="#{loginpagemsg}"></h1>
+                <div style="color:#b81624" th:text="${errorMsg}"></div>
+                <div style="color:#0000FF" th:text="${successMsg}"></div>
+                <div th:if="${param.logout}" th:text="#{loggedout}"></div>
+
+                <div>
+                    <label for="inputUsername" class="sr-only">Set User Name</label>
+                    <input type="email" name="username" id="inputUsername" class="form-control" placeholder="Username" required="" />
+                </div>
+                <BR/>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{setUserStager}"></button>
+            </form>
+            <div class="card-body">
+                <table class="table table-borderless table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <tbody th:unless="${#lists.isEmpty(session.categoryList)}">
+                        <tr th:each="category : ${session.categoryList}">
+                            <td style="text-align: center; vertical-align: middle" th:text="${category.name}"></td>
+                            
+                            <!-- List all Stagers -->
+                            <td th:each="testUnits : ${category.testUnitList}">
+                                <span th:if="${testUnits.hasStagers()}">
+                                    <span th:each="stager : ${testUnits.stagers()}">
+                                        <form class="form-signin" action="#" th:action="@{/stagers/click}" method="post">
+                                            <button class="btn btn-secondary btn-success btn-block" type="Submit"
+                                                    th:text="${stager.linkText}" th:title="${stager.getDescription()}" 
+                                                    th:disabled="${stager.isActive(#request) == false}">
+                                            </button>
+                                            <input type ="hidden" th:name="categoryName" th:value="${category.name}"/>
+                                            <input type ="hidden" th:name="linkName" th:value="${stager.linkText}"/>
+                                        </form>
+                                    </span>
+                                </span>
+                            </td>
+
+                            <!-- List all Pagelinks -->
+                            <td th:each="testUnits : ${category.testUnitList}">
+                                <span th:if="${testUnits.hasPageAccessLinks()}">
+                                    <span th:each="pageLink : ${testUnits.pageAccessLinks()}">
+                                        <form class="form-signin" action="#" th:action="@{/stagers/click}" method="post">
+                                            <button class="btn btn-link btn-block" type="Submit"
+                                                    th:text="${pageLink.linkText}" th:title="${pageLink.getDescription()}" 
+                                                    th:disabled="${pageLink.isActive(#request) == false}">
+                                            </button>
+                                            <input type ="hidden" th:name="categoryName" th:value="${category.name}"/>
+                                            <input type ="hidden" th:name="linkName" th:value="${pageLink.linkText}"/>
+                                        </form>
+                                    </span>
+                                </span> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml" 
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+        layout:decorate="~{dashboarddefault}"
+        lang="en">
+    <head>
+        <title>Event Details</title>
+    </head>
+    <body class="sb-nav-fixed">
+        <div id="layoutSidenav">
+            <div layout:fragment="content" id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h2 class="mt-4" th:text="#{eventdetails}"></h2>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="f as fa-table mr-1 font-weight-bold" th:text="${eventDetail.eventid}"></h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <form class="form-signin" th:action="${referer}" method="get">
+                                        <table class="table table-sm" id="dataTable" width="100%" cellspacing="0">
+                                            <tr>
+                                                <td><label for="postingTitle" class="font-weight-bold">Posting Title:</label></td>
+                                                <td><span th:text="${eventDetail.title}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="opportunityAmount" class="font-weight-bold">Opportunity Amount</label></td>
+                                                <td>$<span th:text="${eventDetail.amount}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="responseDeadline" class="font-weight-bold">Response Deadline:</label></td>
+                                                <td><span th:text="${eventDetail.deadline}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="eventStatus" class="font-weight-bold">Event Status: </label></td>
+                                                <td><span th:text="${eventDetail.status.status}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label for="description"class="font-weight-bold">Description</label></td>
+                                                <td><span th:text="${eventDetail.description}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><button class="btn btn-link btn-block" type="submit" th:text="#{done}"></button></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </body>
+</html>

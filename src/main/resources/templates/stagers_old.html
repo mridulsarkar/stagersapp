@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+    <head>
+        <title>Stagers Page</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <form class="form-signin" th:action="@{/stagers}" method="post">
+                <img class="mb-4" src="https://xmlgraphics.apache.org/images/asf_logo_url.png" alt="" width="52" height="52" />
+                <h1 class="h3 mb-3 font-weight-normal" th:text="#{loginpagemsg}"></h1>
+                <div style="color:#b81624" th:text="${errorMsg}"></div>
+                <div style="color:#0000FF" th:text="${successMsg}"></div>
+                <div th:if="${param.logout}" th:text="#{loggedout}"></div>
+
+                <div>
+                    <label for="inputUsername" class="sr-only">Set User Name</label>
+                    <input type="email" name="username" id="inputUsername" class="form-control" placeholder="Username" required="" />
+                </div>
+                <BR/>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{setUserStager}"></button>
+            </form>
+            <form class="form-signin" th:action="@{/stagers/createuser}" method="get">
+                <button class="btn btn-secondary btn-success btn-block" type="Submit" th:text="#{createUserStager}"></button>
+            </form>
+            <form class="form-signin" th:action="@{/stagers/createevent}" method="get">
+                <div th:if="${currentUser == null}">
+                    <button class="btn btn-outline-secondary btn-block" type="Submit" th:text="#{createEventStager}" disabled></button>
+                </div>
+                <div th:if="${currentUser}">
+                    <button class="btn btn-secondary btn-success btn-block" type="Submit" th:text="#{createEventStager}"></button>
+                </div>
+            </form>
+            <form class="form-signin" th:action="@{/openeventslist}" method="get">
+                <div th:if="${currentUser == null}">
+                    <button class="btn btn-link btn-block" type="Submit" th:text="#{listopenevents}" disabled></button>
+                </div>
+                <div th:if="${currentUser}">
+                    <button class="btn btn-link btn-block" type="Submit" th:text="#{listopenevents}"></button>
+                </div>
+            </form>
+            <form class="form-signin" th:action="@{/concludedeventslist}" method="get">
+                <div th:if="${currentUser == null}">
+                    <button class="btn btn-link btn-block" type="Submit" th:text="#{listconcludedevents}" disabled></button>
+                </div>
+                <div th:if="${currentUser}">
+                    <button class="btn btn-link btn-block" type="Submit" th:text="#{listconcludedevents}"></button>
+                </div>
+            </form>
+            <form class="form-signin" th:action="@{/dashboard}" method="get">
+                <div th:if="${currentUser == null}">
+                    <button class="btn btn-link btn-block" type="Submit" th:text="#{dashboardlink}" disabled></button>
+                </div>
+                <div th:if="${currentUser}">
+                    <button class="btn btn-link btn-block" type="Submit" th:text="#{dashboardlink}"></button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

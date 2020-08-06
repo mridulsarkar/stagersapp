@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+    <head>
+        <title>Stagers Page</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <form class="form-signin" th:action="@{/stagers/createuser}" method="post">
+                <img class="mb-4" src="https://xmlgraphics.apache.org/images/asf_logo_url.png" alt="" width="52" height="52" />
+                <h1 class="h3 mb-3 font-weight-normal" th:text="#{createUserStager}"></h1>
+                <div style="color:#b81624" th:text="${errorMsg}"></div>
+                <div th:if="${param.logout}" th:text="#{loggedout}"></div>
+
+                <div>
+                    <label for="inputUsername" class="sr-only">Set User Name</label>
+                    <input type="email" name="username" id="inputUsername" class="form-control" placeholder="Username" required="" />
+                </div>
+                <BR/>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{register}"></button>
+            </form>
+            <form class="form-signin" th:action="@{/stagers}" method="get">
+                <button class="btn btn-secondary btn-success btn-block" type="Submit" th:text="#{setUserStager}"></button>
+            </form>
+        </div>
+    </body>
+</html>
