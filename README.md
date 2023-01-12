@@ -50,9 +50,11 @@ Install - Manually:
 3. Extract the bundle
     $ sudo tar -xzf openjdk-17.0.5_osx-x64_bin.tar.gz
 
-**Stagers App**:-
+** Compile and Install Stagers App**:-
 $ git clone https://github.com/mridulsarkar/stagersapp
 $ mvn compile 
 $ mvn install
 $ mvn clean install
-$ 
+
+** Run Stages App**:-
+$ mvn spring-boot:run
