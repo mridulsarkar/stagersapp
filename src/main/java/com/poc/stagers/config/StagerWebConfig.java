@@ -20,7 +20,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @Configuration
 @EnableWebMvc
 @EnableMongoRepositories
-public class WebConfig implements WebMvcConfigurer
+public class StagerWebConfig implements WebMvcConfigurer
 {
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS;
 
@@ -63,7 +63,7 @@ public class WebConfig implements WebMvcConfigurer
     
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler(new String[] { "/**" })
-                .addResourceLocations(WebConfig.CLASSPATH_RESOURCE_LOCATIONS)
+                .addResourceLocations(StagerWebConfig.CLASSPATH_RESOURCE_LOCATIONS)
                 .setCacheControl(CacheControl.maxAge(2L, TimeUnit.HOURS)
                 .cachePublic());
         registry.addResourceHandler(new String[] { "/images/**" })

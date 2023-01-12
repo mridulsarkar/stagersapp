@@ -138,19 +138,21 @@ public class StagerCentral
             }
         }
 
-        List<TestUnit> testUnits = category.getTestUnitList();
-        for (TestUnit testUnit : testUnits) {
-            if (testUnit.hasStagers()) {
-                for (TestLink stager : testUnit.stagers()) {
-                    if (stager.getLinkText().equalsIgnoreCase(linkName)) {
-                        return stager;
+        if ( null != category ) {
+            List<TestUnit> testUnits = category.getTestUnitList();
+            for (TestUnit testUnit : testUnits) {
+                if (testUnit.hasStagers()) {
+                    for (TestLink stager : testUnit.stagers()) {
+                        if (stager.getLinkText().equalsIgnoreCase(linkName)) {
+                            return stager;
+                        }
                     }
                 }
-            }
-            if (testUnit.hasPageAccessLinks()) {
-                for (TestLink pageAccessLink : testUnit.pageAccessLinks()) {
-                    if (pageAccessLink.getLinkText().equalsIgnoreCase(linkName)) {
-                        return pageAccessLink;
+                if (testUnit.hasPageAccessLinks()) {
+                    for (TestLink pageAccessLink : testUnit.pageAccessLinks()) {
+                        if (pageAccessLink.getLinkText().equalsIgnoreCase(linkName)) {
+                            return pageAccessLink;
+                        }
                     }
                 }
             }

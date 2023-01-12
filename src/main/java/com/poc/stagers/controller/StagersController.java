@@ -100,7 +100,7 @@ public class StagersController extends StagerCentral
     }
     
 
-    @TestStager(typeList = "Buyer Actions", description = "Create User Stager")
+    @TestStager(typeList = "Buyer Actions", description = "Create User Doyen")
     @RequestMapping(value = { "/stagers/createuser" }, method = { RequestMethod.GET })
     public ModelAndView createUser() {
         ModelAndView modelAndView = new ModelAndView();
@@ -128,7 +128,7 @@ public class StagersController extends StagerCentral
     }
 
     
-    @TestStager(typeList = "Buyer Actions", description = "Create Event Stager")
+    @TestStager(typeList = "Buyer Actions", description = "Create Event Doyen")
     @RequestMapping(value = { "/stagers/createevent" }, method = { RequestMethod.GET })
     public ModelAndView createEvent(HttpServletRequest request, User user) {
         ModelAndView modelAndView = new ModelAndView();
@@ -162,7 +162,7 @@ public class StagersController extends StagerCentral
         return modelAndView;
     }
 
-    @TestStager(typeList = "Buyer Actions", description = "Load Event Stager")
+    @TestStager(typeList = "Buyer Actions", description = "Load Event Doyen")
     @RequestMapping(value = { "/stagers/loadevent" }, method = { RequestMethod.GET })
     public ModelAndView loadEvent(User user) {
         ModelAndView modelAndView = new ModelAndView();

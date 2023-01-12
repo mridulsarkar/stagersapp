@@ -114,7 +114,7 @@ public class TestAnnotationUtil
     
     public static Object createObject(HttpServletRequest requestContext, Class<?> clazz) {
         try {
-            final Object obj = clazz.newInstance();
+            final Object obj = clazz.getDeclaredConstructor().newInstance();
             return obj;
         } catch (Exception exp) {
             return null;

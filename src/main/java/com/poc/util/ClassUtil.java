@@ -128,8 +128,8 @@ public final class ClassUtil
             return null;
         }
         try {
-            return theClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException exp) {
+            return theClass.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException exp) {
             System.err.println(theClass.getName() + exp.getMessage());
             return null;
         }
@@ -205,16 +205,16 @@ public final class ClassUtil
     public static void scanClasses() {
         final String classPath = System.getProperty("java.class.path");
         final String pathSeparator = System.getProperty("path.separator");
-        
+       
         System.setProperty("java.class.path", 
-                            classPath + pathSeparator 
-                            + "/Users/mridulsarkar/.m2/repository/com/poc/stagersapp/0.0.1-SNAPSHOT/stagersapp-0.0.1-SNAPSHOT.jar");
-        
+                             "/Users/mridul.sarkar/projects/stagersapp/target/stagersapp-0.0.1-SNAPSHOT.jar"
+                                + pathSeparator + classPath);
+                                
         try {
             JarScanner.scanClasses(
                             new Filter() {
                                 public boolean accepts(String filename) {
-                                    return true;
+                                    return filename.contains(".jar");
                                 }
                             },
                             // Filter to accept only Stager PoC Classes 

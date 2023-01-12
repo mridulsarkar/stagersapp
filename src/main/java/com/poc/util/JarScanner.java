@@ -25,13 +25,13 @@ import org.scannotation.WarUrlFinder;
 
 import javax.servlet.ServletContextEvent;
 
-import org.objectweb.asm.AnnotationVisitor;
-import org.objectweb.asm.Attribute;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import org.springframework.asm.AnnotationVisitor;
+import org.springframework.asm.Attribute;
+import org.springframework.asm.ClassReader;
+import org.springframework.asm.ClassVisitor;
+import org.springframework.asm.FieldVisitor;
+import org.springframework.asm.MethodVisitor;
+import org.springframework.asm.Opcodes;
 
 
 public class JarScanner
@@ -62,7 +62,7 @@ public class JarScanner
         } else {
             DirectoryIteratorFactory factory = registry.get(url.getProtocol());
             if (factory == null)
-                throw new IOException("Unable to scan directory of protocol: " + url.getProtocol());
+                throw new IOException("Unable to scan directory of protocol: " + url.toString() + " " + url.getProtocol());
             return factory.create(url, filter);
         }
     }
