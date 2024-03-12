@@ -34,7 +34,7 @@
                         <a class="dropdown-item" href="#">Settings</a>
                         <a class="dropdown-item" href="#">Activity Log</a>
                         <div class="dropdown-divider"></div>
-                        <form th:action="@{/logout}" method="post">
+                        <form th:action="@{/logout}" method="get">
                             <button class="dropdown-item" type="submit" th:text="#{logout}"></button>
                         </form>
                     </div>
@@ -60,17 +60,17 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" th:href="@{/createevent}">Create Event</a>
-                                    <a class="nav-link" th:href="@{/openeventslist}">Open Events</a>
-                                    <a class="nav-link" th:href="@{/concludedeventslist}">Concluded Events</a>
+                                    <a class="nav-link" th:href="createevent">Create Event</a>
+                                    <a class="nav-link" th:href="openeventslist">Open Events</a>
+                                    <a class="nav-link" th:href="concludedeventslist">Concluded Events</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" th:href="@{/charts}">
+                            <a class="nav-link" th:href="charts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
                             </a>
-                            <a class="nav-link" th:href="@{/tables}">
+                            <a class="nav-link" th:href="tables">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        <a class="nav-link" th:text="${session.fullName}"></a>
+                        <a class="nav-link" th:text="${session.name}"></a>
                     </div>
                 </nav>
             </div>

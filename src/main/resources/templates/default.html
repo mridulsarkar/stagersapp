@@ -25,7 +25,7 @@
                     <li class="nav-item" th:if="${session.currentUser == null}"><a class="nav-link" th:href="@{/login}">Log in</a></li>
                     <li class="nav-item" th:if="${session.currentUser}">
                         <a class="nav-link" th:text="${session.fullName}"></a>
-                        <form th:action="@{/logout}" method="post">
+                        <form th:action="@{/logout}" method="get">
                             <button type="submit" th:text="#{logout}"></button>
                         </form>
                     </li>

@@ -44,6 +44,14 @@ public class UserDetailsServiceImpl implements UserDetailsService
     }
     
     private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+        return org.springframework.security.core.userdetails.User
+                        .withUsername(user.getUsername())
+                        .password(user.getPassword())
+                        .authorities(authorities)
+                        .accountExpired(false)
+                        .accountLocked(false)
+                        .credentialsExpired(false)
+                        .disabled(false)
+                        .build();
     }
 }

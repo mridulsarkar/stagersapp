@@ -20,10 +20,10 @@
                 <BR/>
                 <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{setUserStager}"></button>
             </form>
-            <form class="form-signin" th:action="@{/stagers/createuser}" method="get">
+            <form class="form-signin" th:action="@{/stagers/createuserstager}" method="get">
                 <button class="btn btn-secondary btn-success btn-block" type="Submit" th:text="#{createUserStager}"></button>
             </form>
-            <form class="form-signin" th:action="@{/stagers/createevent}" method="get">
+            <form class="form-signin" th:action="@{/stagers/createeventstager}" method="get">
                 <div th:if="${currentUser == null}">
                     <button class="btn btn-outline-secondary btn-block" type="Submit" th:text="#{createEventStager}" disabled></button>
                 </div>

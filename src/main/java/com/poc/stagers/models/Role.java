@@ -8,9 +8,10 @@ import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
 
 @Document(collection = "ROLES")
-public class Role
+public class Role implements GrantedAuthority
 {
     @Transient
     public static final String SEQUENCE_NAME = "roles_sequence";
@@ -47,5 +48,9 @@ public class Role
     
     public void setCreatedDate(final Date createddate) {
         this.createddate = createddate;
+    }
+
+    public String getAuthority() {
+        return this.getRole();
     }
 }

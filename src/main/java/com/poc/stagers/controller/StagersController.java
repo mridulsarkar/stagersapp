@@ -3,15 +3,18 @@ package com.poc.stagers.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.poc.stagers.jwt.JwtTokenProvider;
 import com.poc.stagers.models.Event;
 import com.poc.stagers.models.EventStatus;
 import com.poc.stagers.models.User;
 import com.poc.stagers.repositories.EventRepository;
 import com.poc.stagers.repositories.EventStatusRepository;
 import com.poc.stagers.service.SequenceGeneratorService;
-import com.poc.stagers.service.UserService;
+import com.poc.stagers.service.UserServiceImpl;
 import com.poc.test.TestContext;
 import com.poc.test.annotation.TestPageLink;
 import com.poc.test.annotation.TestStager;
@@ -35,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class StagersController extends StagerCentral
 {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
@@ -79,40 +82,66 @@ public class StagersController extends StagerCentral
 
     
     @RequestMapping(value = { "/stagers" }, method = { RequestMethod.POST })
-    public ModelAndView setUser(HttpServletRequest request, 
+    public ModelAndView setUser(HttpServletRequest request, HttpServletResponse response,
                                 @RequestParam(value = "username", required = true) String username) {
         ModelAndView modelAndView = new ModelAndView();
-        User user = userService.findByUsername(username);
-        if (user == null) {
+        User user = null;
+        try {
+            user = userService.findByUsername(username);
+        } catch (Exception exp) {
+            logger.error(exp.getLocalizedMessage());
+            user = null;
+        }
+
+        if (null == user) {
             modelAndView.addObject("errorMsg", "No such User exists!!!");
             modelAndView.setViewName("stagers");
         } else {
+            // set user in session
             setUserInSession(username);
+            // create jwt token and set in cookie
+            String jwtToken = userService.refresh(username);
+            Cookie cookie = new Cookie(JwtTokenProvider.COOKIE_NAME, jwtToken);
+            cookie.setPath("/");
+            cookie.setMaxAge(Integer.MAX_VALUE);
+            response.addCookie(cookie);
+
             // Add user to Test Context
             TestContext.getTestContext(request).put(User.class, user);
             StagerCentral.setAttributeInSession(request.getSession(), 
                                                 "currentUser", (Object)user);
             StagerCentral.setAttributeInSession(request.getSession(), 
                                                 "fullName", user.getFirstName() + " " + user.getLastName());
+            StagerCentral.setAttributeInSession(request.getSession(),
+                                                "name", user.getUsername());
             modelAndView.setViewName("stagers");
+            
         }
         return modelAndView;
     }
     
 
     @TestStager(typeList = "Buyer Actions", description = "Create User Doyen")
-    @RequestMapping(value = { "/stagers/createuser" }, method = { RequestMethod.GET })
+    @RequestMapping(value = { "/stagers/createuserstager" }, method = { RequestMethod.GET })
     public ModelAndView createUser() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createuserstager");
         return modelAndView;
     }
     
-    @RequestMapping(value = { "/stagers/createuser" }, method = { RequestMethod.POST })
+    @RequestMapping(value = { "/stagers/createuserstager" }, method = { RequestMethod.POST })
     public ModelAndView createUser( HttpServletRequest request, 
                                     @RequestParam(value = "username", required = true) String username) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findByUsername(username);
+        User userExists = null;
+
+        try {
+            userExists = userService.findByUsername(username);
+        } catch (Exception exp) {
+            logger.error(exp.getLocalizedMessage());
+            userExists = null;
+        }
+
         if (userExists != null) {
             modelAndView.addObject("errorMsg", "There is already a user registered with the username provided!");
             modelAndView.setViewName("createuserstager");
@@ -129,14 +158,14 @@ public class StagersController extends StagerCentral
 
     
     @TestStager(typeList = "Buyer Actions", description = "Create Event Doyen")
-    @RequestMapping(value = { "/stagers/createevent" }, method = { RequestMethod.GET })
+    @RequestMapping(value = { "/stagers/createeventstager" }, method = { RequestMethod.GET })
     public ModelAndView createEvent(HttpServletRequest request, User user) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("createeventstager");
         return modelAndView;
     }
     
-    @RequestMapping(value = { "/stagers/createevent" }, method = { RequestMethod.POST })
+    @RequestMapping(value = { "/stagers/createeventstager" }, method = { RequestMethod.POST })
     public ModelAndView createEvent(HttpServletRequest request, 
                                     @RequestParam(value = "eventId", required = true) String eventId, 
                                     @RequestParam(value = "status", required = true) String status, 
@@ -163,14 +192,14 @@ public class StagersController extends StagerCentral
     }
 
     @TestStager(typeList = "Buyer Actions", description = "Load Event Doyen")
-    @RequestMapping(value = { "/stagers/loadevent" }, method = { RequestMethod.GET })
+    @RequestMapping(value = { "/stagers/loadeventstager" }, method = { RequestMethod.GET })
     public ModelAndView loadEvent(User user) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("loadevent");
         return modelAndView;
     }
 
-    @RequestMapping(value = { "/stagers/loadevent" }, method = { RequestMethod.POST })
+    @RequestMapping(value = { "/stagers/loadeventstager" }, method = { RequestMethod.POST })
     public ModelAndView loadEvent(HttpServletRequest request, 
                                     @RequestParam(value = "eventid", required = true) String eventId) {        
         ModelAndView modelAndView = new ModelAndView();
@@ -208,7 +237,13 @@ public class StagersController extends StagerCentral
         } else {
             username = principal.toString();
         }
-        User user = userService.findByUsername(username);
+        User user = null;
+        try {
+            user = this.userService.findByUsername(username);
+        } catch ( Exception exp ) {
+            logger.error(exp.getLocalizedMessage());
+            user = null;
+        }
         return user;
     }
     
@@ -227,24 +262,21 @@ public class StagersController extends StagerCentral
     @TestPageLink(typeList = "Buyer Actions", description = "Go To Dashboard")
     @RequestMapping(value = { "/stagers/dashboardpage" }, method = { RequestMethod.GET })
     public ModelAndView dashboardPage(HttpServletRequest request, User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/dashboard");
+        ModelAndView modelAndView = new ModelAndView("dashboard");
         return modelAndView;
     }
     
     @TestPageLink(typeList = "Buyer Actions", description = "Go To Open Events List")
     @RequestMapping(value = { "/stagers/openeventslistpage" }, method = { RequestMethod.GET })
     public ModelAndView openEventsListPage(HttpServletRequest request, User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/openeventslist");
+        ModelAndView modelAndView = new ModelAndView("openeventslist");
         return modelAndView;
     }
     
     @TestPageLink(typeList = "Buyer Actions", description = "Go To Concluded Events List")
     @RequestMapping(value = { "/stagers/concludedeventslistpage" }, method = { RequestMethod.GET })
     public ModelAndView concludedEventsListPage(HttpServletRequest request, User user) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/concludedeventslist");
+        ModelAndView modelAndView = new ModelAndView("concludedeventslist");
         return modelAndView;
     }
 

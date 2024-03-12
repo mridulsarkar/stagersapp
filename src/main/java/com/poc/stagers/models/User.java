@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -23,12 +24,14 @@ public class User
     private long id;
     
     @Indexed(unique = true, direction = IndexDirection.DESCENDING, dropDups = true)
+    @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
     private String username;
     
     @Indexed
     private String email;
     
     @NotNull
+    @Size(min = 8, message = "Minimum password length: 8 characters")
     private String password;
     
     @NotNull

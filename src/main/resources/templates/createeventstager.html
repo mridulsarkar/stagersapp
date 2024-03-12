@@ -6,7 +6,7 @@
     </head>
     <body>
         <div layout:fragment="content">
-            <form class="form-signin" th:action="@{/stagers/createevent}" method="post">
+            <form class="form-signin" th:action="@{/stagers/createeventstager}" method="post">
                 <img class="mb-4" src="https://xmlgraphics.apache.org/images/asf_logo_url.png" alt="" width="52" height="52" />
                 <h1 class="h3 mb-3 font-weight-normal" th:text="#{createEvent}"></h1>
                 <div style="color:#b81624" th:text="${errorMsg}"></div>

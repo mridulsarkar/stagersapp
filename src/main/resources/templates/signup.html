@@ -6,7 +6,7 @@
     </head>
     <body>
         <div layout:fragment="content">
-            <form class="form-signin" action="#" th:action="@{/signup}" method="post" th:object="${user}">
+            <form class="form-signin" action="#" method="post" th:action="@{/signup}" th:object="${user}">
                 <img class="mb-4" src="https://xmlgraphics.apache.org/images/asf_logo_url.png" alt="" width="52" height="52" />
                 <h1 class="h3 mb-3 font-weight-normal" th:text="#{userregistration}"></h1>
                 
@@ -34,10 +34,10 @@
                     <label for="inputSecondname" class="sr-only">Second Name</label>
                     <input type="text" th:field="*{LastName}" class="form-control" placeholder="Secondname" required="" />
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" th:text="#{register}"></button>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{register}"></button>
             </form>
-            <form class="form-signin" th:action="@{/login}" method="get">
-                <button class="btn btn-md btn-success btn-block" type="Submit" th:text="#{login}"></button>
+            <form class="form-signin" method="get" th:action="@{/login}">
+                <button class="btn btn-md btn-success btn-block" type="submit" th:text="#{login}"></button>
             </form>
         </div>
     </body>
